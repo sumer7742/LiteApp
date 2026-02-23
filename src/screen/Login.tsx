@@ -1,55 +1,88 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import {
-    ActivityIndicator,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
-
-type RootStackParamList = {
-  Login: undefined;
-  Tabs: undefined;
-};
-
-type NavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Login"
->;
-
-export default function LoginScreen() {
-  const navigation = useNavigation<NavigationProp>();
-
+import * as Location from "expo-location";
+import { useLoginHook } from "../hooks/useLogin";
+import { getOrCreateDeviceId } from "../utils/device_id.utils";
+import { saveToken } from "../utils/Token";
+import { getToken } from "../utils/Token";
+import { useNavigation } from "@react-navigation/native";
+const LoginScreen = () => {
+const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { mutate, isPending } = useLoginHook();
+const checkToken = async () => {
+  const token = await getToken();
+  console.log("TOKEN =>", token);
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      alert("Please enter email & password");
-      return;
+};
+  const getLocation = async () => {
+    const { status } =
+      await Location.requestForegroundPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert("Permission Denied", "Location permission required");
+      return null;
     }
 
-    try {
-      setLoading(true);
-
-      // 👇 Yaha apna API call laga dena
-      setTimeout(() => {
-        setLoading(false);
-        navigation.replace("Tabs"); // 🔥 Go to Home Tabs
-      }, 1500);
-    } catch (error) {
-      setLoading(false);
-      alert("Login Failed");
-    }
+    const location = await Location.getCurrentPositionAsync({});
+    return location.coords;
   };
+
+const handleLogin = async () => {
+  if (!email || !password) {
+    Alert.alert("Error", "Please enter email & password");
+    return;
+  }
+
+  try {
+    const deviceId = await getOrCreateDeviceId();
+    const coords = await getLocation();
+
+    const payload = {
+      email: email.trim().toLowerCase(),
+      password: password.trim(),
+      device_id: deviceId,
+      latitude: Number(coords?.latitude) || 0,
+      longitude: Number(coords?.longitude) || 0,
+    };
+
+    console.log("LOGIN PAYLOAD =>", payload); 
+
+ mutate(payload, {
+  onSuccess: async (res) => {   
+    console.log("Login success:", res);
+
+    await saveToken(res.token);  
+    checkToken();              
+  navigation.replace("Tabs");
+    Alert.alert("Success", "Login Successfully");
+  },
+
+  onError: (error: any) => {
+    console.log("Login error:", JSON.stringify(error , null , 2));
+    Alert.alert(
+      "Error",
+      error?.response?.data?.message || "Login failed"
+    );
+  },
+});
+  } catch (error) {
+    console.log("Login error:", error);
+  }
+};
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back 🔐</Text>
+      <Text style={styles.title}>Login</Text>
 
       <TextInput
         placeholder="Enter Email"
@@ -69,7 +102,7 @@ export default function LoginScreen() {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        {loading ? (
+        {isPending ? (
           <ActivityIndicator color="#fff" />
         ) : (
           <Text style={styles.buttonText}>Login</Text>
@@ -77,13 +110,15 @@ export default function LoginScreen() {
       </TouchableOpacity>
     </View>
   );
-}
+};
+
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 25,
+    padding: 20,
     backgroundColor: "#fff",
   },
   title: {
@@ -100,13 +135,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
-    backgroundColor: "black",
+    backgroundColor: "#007bff",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
   },
   buttonText: {
-    color: "white",
+    color: "#fff",
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

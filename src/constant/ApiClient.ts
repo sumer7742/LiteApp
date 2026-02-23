@@ -1,5 +1,3 @@
-
-
 import axios, {
     AxiosError,
     AxiosResponse,
@@ -41,20 +39,21 @@ const serverHeaders = async (
   if (deviceId) {
     config.headers.DeviceId = deviceId;
   }
-
+  config.headers["x-reseller-name"] = "TEST";
+  config.headers["x-reseller-url"] = "https://elitepg.co.in";
+  config.headers["origin"] = "https://elitepg.co.in";
+  config.headers["referer"] = "https://elitepg.co.in";
   return config;
 };
 
 
 const handle401Error = async (error: AxiosError) => {
-  console.log("--------->",error?.message)
   if (error.response?.status === 401) {
     await removeToken();
     // optional: reset navigation / force logout
   }
   return Promise.reject(error);
 };
-
 
 apiClient.interceptors.request.use(
   serverHeaders,
