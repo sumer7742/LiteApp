@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../screen/Login";
+import RegisterScreen from "../screen/Signup";
 import AppNavigator from "./AppNavigation";
 
 const Stack = createNativeStackNavigator();
@@ -10,8 +10,8 @@ export default function RootNavigator() {
       
       {/* Login FIRST */}
       <Stack.Screen
-        name="Login"
-        component={LoginScreen}
+        name="signup"
+        component={RegisterScreen}
         options={{ headerShown: false }}
       />
 
