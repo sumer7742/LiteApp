@@ -1,20 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import * as Location from "expo-location";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
   ActivityIndicator,
   Alert,
   StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import * as Location from "expo-location";
 import { useLoginHook } from "../hooks/useLogin";
 import { getOrCreateDeviceId } from "../utils/device_id.utils";
-import { saveToken, getToken } from "../utils/Token";
-import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { getToken, saveToken } from "../utils/Token";
 
 const LoginScreen = () => {
   const navigation = useNavigation();

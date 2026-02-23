@@ -252,7 +252,7 @@ const SignupScreen = ({ navigation }: any) => {
         )}
       </TouchableOpacity>
       <TouchableOpacity
-  onPress={() => navigation.navigate("login")}
+  onPress={() => navigation.navigate("Login")}
   style={{ marginTop: 20 }}
 >
   <Text style={{ textAlign: "center", color: "#185e91" }}>
