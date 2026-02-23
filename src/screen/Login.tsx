@@ -1,31 +1,112 @@
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import useLogin from "../hooks/login";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { useState } from "react";
+import {
+    ActivityIndicator,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
+
+type RootStackParamList = {
+  Login: undefined;
+  Tabs: undefined;
+};
+
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
 export default function LoginScreen() {
-  const { login, loading, error } = useLogin();
+  const navigation = useNavigation<NavigationProp>();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    const data = await login({
-      email: "kpranav612@gmail.com",
-      password: "Puma5532#",
-      latitude: 28.422441904482,
-      longitude: 77.03712303600295,
-      device_id: "d5c4f5d2-1aa9-4c76-a597-f349890bd884",
-    });
+    if (!email || !password) {
+      alert("Please enter email & password");
+      return;
+    }
 
-    if (data) {
-      console.log("SUCCESS:", data);
+    try {
+      setLoading(true);
+
+      // 👇 Yaha apna API call laga dena
+      setTimeout(() => {
+        setLoading(false);
+        navigation.replace("Tabs"); // 🔥 Go to Home Tabs
+      }, 1500);
+    } catch (error) {
+      setLoading(false);
+      alert("Login Failed");
     }
   };
 
   return (
-    <View>
-      <TouchableOpacity onPress={handleLogin}>
-        <Text>{loading ? "Logging in..." : "Login"}</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome Back 🔐</Text>
 
-      {error && <Text>{error}</Text>}
+      <TextInput
+        placeholder="Enter Email"
+        value={email}
+        onChangeText={setEmail}
+        style={styles.input}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <TextInput
+        placeholder="Enter Password"
+        value={password}
+        onChangeText={setPassword}
+        style={styles.input}
+        secureTextEntry
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Login</Text>
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 25,
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 30,
+    textAlign: "center",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: "black",
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+});

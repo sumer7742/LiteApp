@@ -6,9 +6,22 @@ const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Tabs" component={AppNavigator} />
-      <Stack.Screen name="Login" component={LoginScreen} />
+    <Stack.Navigator initialRouteName="Login">
+      
+      {/* Login FIRST */}
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+
+      {/* After login → Tabs */}
+      <Stack.Screen
+        name="Tabs"
+        component={AppNavigator}
+        options={{ headerShown: false }}
+      />
+
     </Stack.Navigator>
   );
 }
