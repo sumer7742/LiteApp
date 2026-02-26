@@ -17,10 +17,14 @@ export default function SimpleDashboard() {
       {/* HEADER */}
     
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView >
         {/* SUMMARY CARDS */}
         <View style={styles.cardContainer}>
           <DashboardCard title="Total Users" value="1,245" icon="users" />
+          <DashboardCard title="Total Revenue" value="₹52,340" icon="credit-card" />
+          <DashboardCard title="Transactions" value="389" icon="repeat" />
+          <DashboardCard title="Pending Requests" value="24" icon="clock" />
+            <DashboardCard title="Total Users" value="1,245" icon="users" />
           <DashboardCard title="Total Revenue" value="₹52,340" icon="credit-card" />
           <DashboardCard title="Transactions" value="389" icon="repeat" />
           <DashboardCard title="Pending Requests" value="24" icon="clock" />

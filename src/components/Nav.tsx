@@ -189,6 +189,21 @@ export default function PremiumSidebar() {
             );
           })}
         </ScrollView>
+        <View style={styles.logoutContainer}>
+  <TouchableOpacity
+    style={styles.logoutButton}
+    onPress={() => {
+      logout(); // user clear
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
+    }}
+  >
+    <Icon name="log-out" size={20} color="white" />
+    <Text style={styles.logoutText}>Logout</Text>
+  </TouchableOpacity>
+</View>
       </Animated.View>
 
       {/* HEADER */}
@@ -262,4 +277,23 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "white",
   },
+  logoutContainer: {
+  borderTopWidth: 1,
+  borderTopColor: "white",
+  paddingTop: 15,
+  marginBottom: 150,
+},
+
+logoutButton: {
+  flexDirection: "row",
+  alignItems: "center",
+  paddingVertical: 12,
+},
+
+logoutText: {
+  color: "white",
+  marginLeft: 12,
+  fontSize: 15,
+  fontWeight: "500",
+},
 });

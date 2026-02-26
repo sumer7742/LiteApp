@@ -98,7 +98,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (data?.success && data.data) {
       setUser(data.data);
     }
-  }, [data]);
+  }, [data,refetch]);
 
   /* =====================================================
      🔥 LOGIN
@@ -136,8 +136,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       await AsyncStorage.removeItem("accessToken");
       delete apiClient.defaults.headers.common["Authorization"];
       setUser(null);
+        window.location.reload(); 
     }
   };
+
+ 
+
 
   /* =====================================================
      🔹 CONTEXT VALUE
