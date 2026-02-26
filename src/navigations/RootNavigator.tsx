@@ -1,13 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SimpleDashboard from "../components/dashboard";
+import CustomNavbar from "../components/Nav";
 import LoginScreen from "../screen/Login";
 import RegisterScreen from "../screen/Signup";
 import AppNavigator from "./AppNavigation";
-
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Login"
+    
+    screenOptions={{
+        header: () => <CustomNavbar/>,
+      }}
+    >
       
       {/* Login FIRST */}
       <Stack.Screen
@@ -20,12 +26,17 @@ export default function RootNavigator() {
         component={LoginScreen}
         options={{ headerShown: false }}
       />
-
+ 
+       <Stack.Screen
+        name="SimpleDashboard"
+        component={SimpleDashboard}
+      
+      />
       {/* After login → Tabs */}
       <Stack.Screen
         name="Tabs"
         component={AppNavigator}
-        options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       />
 
     </Stack.Navigator>
