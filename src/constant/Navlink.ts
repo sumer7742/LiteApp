@@ -1,9 +1,10 @@
-// import type { NavLink } from "../interface/interface";
+
 export const navLinks= [
   {
     name: "Dashboard",
-    path: "SimpleDashboard",
+    path: "Tabs" ,
     icon: "home",
+     screen: "Dashboard",
     children: [],
     visible: ['APP_USER', 'API_USER', 'PAYOUT_API_USER', 'PAYOUT_APP_USER']
   },
@@ -35,7 +36,7 @@ export const navLinks= [
     icon: "arrow-up",
     visible: ['APP_USER', 'API_USER', 'PAYOUT_API_USER', 'PAYOUT_APP_USER'],
     children: [
-      { name: "Initiate", path: "/payout/new", icon: "send", visible: ['APP_USER', 'PAYOUT_APP_USER', 'PAYOUT_API_USER',], },
+      { name: "Initiate",path:"Tabs" ,screen: "Withdraw", icon: "send", visible: ['APP_USER', 'PAYOUT_APP_USER', 'PAYOUT_API_USER',], },
       { name: "Bulk Payout", path: "/payout/bulk", icon: "upload-cloud", visible: ['APP_USER', 'PAYOUT_APP_USER'], },
       { name: "Pending", path: "/payout/pending", icon: "clock", visible: ['APP_USER', 'API_USER', 'PAYOUT_APP_USER'], },
       { name: "Completed", path: "/payout/completed", icon: "check-circle", visible: ['APP_USER', 'API_USER', 'PAYOUT_APP_USER', 'PAYOUT_API_USER'], },
@@ -72,25 +73,25 @@ export const navLinks= [
  {
   name: "Authentication",
   path: "#",
-  icon: "lock", // lock_person -> lock
+  icon: "lock", 
   visible: ['API_USER', 'PAYOUT_API_USER'],
   children: [
     { 
       name: "Client", 
       path: "ClientScreen", 
-      icon: "user", // identity_platform -> user
+      icon: "user", 
       visible: ['API_USER', 'PAYOUT_API_USER'] 
     },
     {
       name: "Payin Webhooks",
       path: "PayinScreen",
-      icon: "arrow-down-circle", // arrow_downward
+      icon: "arrow-down-circle",
       visible: ['API_USER', 'PAYOUT_API_USER']
     },
     {
       name: "Payout Webhooks",
       path: "PayoutScreen",
-      icon: "arrow-up-circle", // arrow_upward
+      icon: "arrow-up-circle", 
       visible: ['API_USER', 'PAYOUT_API_USER']
     }
   ],
@@ -99,12 +100,12 @@ export const navLinks= [
   name: "Developer Guide",
   visible: ['API_USER', 'PAYOUT_API_USER'],
   path: "#",
-  icon: "code", // developer_guide -> code
+  icon: "code", 
   children: [
     { 
       name: "Deposit", 
       path: "DepositScreen", 
-      icon: "dollar-sign", // savings
+      icon: "dollar-sign", 
       visible: ['API_USER'] 
     },
     { 
@@ -116,7 +117,7 @@ export const navLinks= [
     { 
       name: "Bank", 
       path: "BankScreen", 
-      icon: "home", // no direct bank icon in feather
+      icon: "home", 
       visible: ['API_USER', 'PAYOUT_API_USER'] 
     },
     {
