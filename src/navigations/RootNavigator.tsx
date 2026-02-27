@@ -4,6 +4,7 @@ import CustomNavbar from "../components/Nav";
 import LoginScreen from "../screen/Login";
 import RegisterScreen from "../screen/Signup";
 import AppNavigator from "./AppNavigation";
+import DepositListScreen from "../components/DepositNew";
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
@@ -32,6 +33,12 @@ export default function RootNavigator() {
         component={SimpleDashboard}
       
       />
+       <Stack.Screen
+        name="/payin/new"
+        component={DepositListScreen}
+      
+      />
+
       {/* After login → Tabs */}
       <Stack.Screen
         name="Tabs"
