@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { useDepositsData } from "../hooks/useDeposit";
 import Pagination from "../components/Pagination";
+import { LayoutAnimation} from "react-native";
+
 const DepositTableScreen = () => {
 const [pageNumber, setPageNumber] = useState(1);
 const [pageSize, setPageSize] = useState(10);
@@ -37,20 +39,25 @@ const { data, isLoading, isError } = useDepositsData({
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#f4f6f9", padding: 12 }}>
+    <View style={{ flex: 1, backgroundColor: "#f4f6f9",  paddingTop: 62,}}>
       <FlatList
         data={data?.results}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 4 }}
         renderItem={({ item }) => {
           const isExpanded = expandedId === item.id;
 
           return (
             <TouchableOpacity
               activeOpacity={0.9}
-              onPress={() =>
-                setExpandedId(isExpanded ? null : item.id)
-              }
-              style={styles.card}
+             onPress={() => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  setExpandedId(isExpanded ? null : item.id);
+}}
+             style={[
+  styles.card,
+  isExpanded && styles.selectedCard
+]}
             >
               {/* TOP ROW (Always Visible) */}
               <View style={styles.rowBetween}>
@@ -67,17 +74,18 @@ const { data, isLoading, isError } = useDepositsData({
                   <Text style={styles.amount}>
                     ₹ {item.amount}
                   </Text>
-
-                  <View
-                    style={[
-                      styles.statusBadge,
-                      item.status === "SUCCESS"
-                        ? styles.success
-                        : item.status === "FAILED"
-                        ? styles.failed
-                        : styles.pending,
-                    ]}
-                  >
+                <View
+  style={[
+    styles.statusBadge,
+    item.status === "SUCCESS"
+      ? styles.success
+      : item.status === "FAILED"
+      ? styles.failed
+      : item.status === "PENDING"
+      ? styles.pending
+      : styles.dropped  
+  ]}
+>
                     <Text style={styles.statusText}>
                       {item.status}
                     </Text>
@@ -120,14 +128,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  card: {
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 12,
-    elevation: 3,
-  },
-
+card: {
+  backgroundColor: "#f3f4f6",   
+  paddingVertical: 14,
+  paddingHorizontal: 16,
+  borderRadius: 0,              
+  marginBottom: 0,             
+  borderTopWidth: 1,
+  borderBottomWidth: 1,
+  borderColor: "#cbd5e1",      
+},
   rowBetween: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -164,22 +174,30 @@ const styles = StyleSheet.create({
   },
 
   success: {
-    backgroundColor: "#22C55E",
+    backgroundColor: "#16a34a",
   },
 
   failed: {
-    backgroundColor: "#EF4444",
+    backgroundColor: "#dc2626",
   },
 
   pending: {
-    backgroundColor: "#F59E0B",
+    backgroundColor: "#f59e0b",
   },
+  dropped: {
+  backgroundColor: "#9ca3af",   
+},
 
-  details: {
-    marginTop: 12,
-    borderTopWidth: 1,
-    borderColor: "#eee",
-    paddingTop: 10,
-    gap: 4,
-  },
+details: {
+  marginTop: 12,
+  paddingTop: 10,
+  borderTopWidth: 1,
+  borderColor: "#e5e7eb",
+},
+
+selectedCard: {
+  backgroundColor: "#e2e8f0",   
+},
+
+
 });

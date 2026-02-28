@@ -95,54 +95,74 @@ export default Pagination;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
-    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    backgroundColor: "#1f2937",
     borderTopWidth: 1,
-    borderColor: "#eee",
+    borderColor: "#374151",
   },
+
   row: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",  
     alignItems: "center",
   },
+
   button: {
-    backgroundColor: "#4f46e5",
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    borderRadius: 8,
-    marginHorizontal: 10,
+    backgroundColor: "#374151",
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 6,
+    minWidth: 70,                      
+    alignItems: "center",
   },
+
   disabled: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#374151",
+    opacity: 0.5,
   },
+
   buttonText: {
-    color: "#fff",
+    color: "#d1d5db",
     fontWeight: "600",
+    fontSize: 14,
   },
+
   pageText: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#e5e7eb",
+    letterSpacing: 0.5,              
   },
+
   sizeContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 12,
+    marginTop: 10,
   },
+
   sizeButton: {
     borderWidth: 1,
-    borderColor: "#4f46e5",
-    paddingHorizontal: 14,
-    paddingVertical: 6,
+    borderColor: "#4b5563",
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     borderRadius: 6,
-    marginHorizontal: 6,
+    marginHorizontal: 5,
+    minWidth: 40,                     
+    alignItems: "center",
   },
+
   activeSize: {
-    backgroundColor: "#4f46e5",
+    backgroundColor: "#10b981",
+    borderColor: "#10b981",
   },
+
   sizeText: {
-    color: "#4f46e5",
-    fontWeight: "500",
+    color: "#d1d5db",
+    fontWeight: "600",
+    fontSize: 13,
   },
+
   activeSizeText: {
     color: "#fff",
   },

@@ -5,10 +5,8 @@ import Withdraw from "../components/Withdraw";
 import LoginScreen from "../screen/Login";
 import RegisterScreen from "../screen/Signup";
 import AppNavigator from "./AppNavigation";
-<<<<<<< HEAD
 import DepositListScreen from "../components/DepositNew";
-const Stack = createNativeStackNavigator();
-=======
+
 // navigation/types.ts
 
 export type RootStackParamList = {
@@ -22,7 +20,6 @@ export type RootStackParamList = {
   };
 };
 const Stack = createNativeStackNavigator<RootStackParamList>();
->>>>>>> 245bf0af1bda2ac7e379f8f7857a34eec3adeb9c
 
 export default function RootNavigator() {
   return (
@@ -55,7 +52,6 @@ export default function RootNavigator() {
       
       />
        <Stack.Screen
-<<<<<<< HEAD
         name="/payin/new"
         component={DepositListScreen}
       
@@ -66,11 +62,9 @@ export default function RootNavigator() {
         name="Tabs"
         component={AppNavigator}
         // options={{ headerShown: false }}
-=======
         name="Withdraw"
         component={Withdraw}
       
->>>>>>> 245bf0af1bda2ac7e379f8f7857a34eec3adeb9c
       />
      
       
